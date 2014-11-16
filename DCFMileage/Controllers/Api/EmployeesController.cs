@@ -18,6 +18,10 @@ namespace DCFMileage.Controllers.Api
         private TripDbContext db = new TripDbContext();
 
         // GET: api/Employees
+        /// <summary>
+        /// Test here
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<Employee> GetEmployees()
         {
             return db.Employees;
