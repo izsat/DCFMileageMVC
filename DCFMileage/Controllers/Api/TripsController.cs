@@ -13,48 +13,45 @@ using DCFMileage.Models;
 
 namespace DCFMileage.Controllers.Api
 {
-    public class EmployeesController : ApiController
+    public class TripsController : ApiController
     {
         private TripDbContext db = new TripDbContext();
 
-        // GET: api/Employees
-        /// <summary>
-        /// Test here - SI PRestige Worldwide
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<Employee> GetEmployees()
+        // GET: api/Trips
+
+        public IQueryable<Trip> GetTrips()
         {
-            return db.Employees;
+            return db.Trips;
         }
 
-        // GET: api/Employees/5
-        [ResponseType(typeof(Employee))]
-        public IHttpActionResult GetEmployee(int id)
+        // GET: api/Trips/5
+        [ResponseType(typeof(Trip))]
+        public IHttpActionResult GetTrip(int id)
         {
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
+            Trip trip = db.Trips.Find(id);
+            if (trip == null)
             {
                 return NotFound();
             }
 
-            return Ok(employee);
+            return Ok(trip);
         }
 
-        // PUT: api/Employees/5
+        // PUT: api/Trips/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutEmployee(int id, Employee employee)
+        public IHttpActionResult PutTrip(int id, Trip trip)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != employee.EmployeeID)
+            if (id != trip.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(employee).State = EntityState.Modified;
+            db.Entry(trip).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +59,7 @@ namespace DCFMileage.Controllers.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(id))
+                if (!TripExists(id))
                 {
                     return NotFound();
                 }
@@ -75,35 +72,35 @@ namespace DCFMileage.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Employees
-        [ResponseType(typeof(Employee))]
-        public IHttpActionResult PostEmployee(Employee employee)
+        // POST: api/Trips
+        [ResponseType(typeof(Trip))]
+        public IHttpActionResult PostTrip(Trip trip)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Employees.Add(employee);
+            db.Trips.Add(trip);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = employee.EmployeeID }, employee);
+            return CreatedAtRoute("DefaultApi", new { id = trip.Id }, trip);
         }
 
-        // DELETE: api/Employees/5
-        [ResponseType(typeof(Employee))]
-        public IHttpActionResult DeleteEmployee(int id)
+        // DELETE: api/Trips/5
+        [ResponseType(typeof(Trip))]
+        public IHttpActionResult DeleteTrip(int id)
         {
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
+            Trip trip = db.Trips.Find(id);
+            if (trip == null)
             {
                 return NotFound();
             }
 
-            db.Employees.Remove(employee);
+            db.Trips.Remove(trip);
             db.SaveChanges();
 
-            return Ok(employee);
+            return Ok(trip);
         }
 
         protected override void Dispose(bool disposing)
@@ -115,9 +112,9 @@ namespace DCFMileage.Controllers.Api
             base.Dispose(disposing);
         }
 
-        private bool EmployeeExists(int id)
+        private bool TripExists(int id)
         {
-            return db.Employees.Count(e => e.EmployeeID == id) > 0;
+            return db.Trips.Count(e => e.Id == id) > 0;
         }
     }
 }

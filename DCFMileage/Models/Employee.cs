@@ -11,6 +11,6 @@ namespace DCFMileage.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Employee Supervisor { get; set; }
-        public ICollection<Trip> Mileages { get; set; }
+        public ICollection<Trip> Trips { get; set; }
     }
 }
