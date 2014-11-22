@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace DCFMileage.Models
 {
-    public class Trip
+    public class TripApiModel
     {
         public int Id { get; set; }
 
@@ -16,10 +15,10 @@ namespace DCFMileage.Models
 
         public virtual Location StartLocation { get; set; }
         public virtual Location EndLocation { get; set; }
-        [DataType(DataType.Date)]
+       
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string Purpose { get; set; }
-        public virtual Employee Employee { get; set; }
+        public int EmployeeId { get; set; }
     }
 }

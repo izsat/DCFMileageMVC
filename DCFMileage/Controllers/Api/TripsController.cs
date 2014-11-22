@@ -28,13 +28,27 @@ namespace DCFMileage.Controllers.Api
         [ResponseType(typeof(Trip))]
         public IHttpActionResult GetTrip(int id)
         {
-            Trip trip = db.Trips.Find(id);
-            if (trip == null)
+            var trips = from trip in db.Trips
+                        where trip.Employee.EmployeeID == id
+                        select trip;
+
+            List<TripApiModel> tripList = new List<TripApiModel>();
+            foreach(var trip in trips)
             {
-                return NotFound();
+                TripApiModel newTrip = new TripApiModel();
+                newTrip.Id = trip.Id;
+                newTrip.StartMileage = trip.StartMileage;
+                newTrip.EndMileage = trip.EndMileage;
+                newTrip.EmployeeId = trip.Employee.EmployeeID;
+                newTrip.Purpose = trip.Purpose;
+                newTrip.StartLocation = trip.StartLocation;
+                newTrip.EndLocation = trip.EndLocation;
+                tripList.Add(newTrip);
             }
 
-            return Ok(trip);
+            IEnumerable<TripApiModel> tripJson = tripList;
+
+            return Ok(tripJson);
         }
 
         // PUT: api/Trips/5
